@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Air Force Day Flypast Wish</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--lime:#c8ff00;--ink:#f2f5f7;--dim:#8a95a3;--saf:#ff9933;--grn:#138808}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Outfit',system-ui,sans-serif;color:var(--ink);background:radial-gradient(120% 80% at 50% 110%,#16243a 0%,#070a12 55%,#04060b 100%);overflow:hidden;display:grid;place-items:center}
+#stars i{position:absolute;background:#fff;border-radius:50%;opacity:.15;animation:tw 3s ease-in-out infinite}
+@keyframes tw{50%{opacity:.9}}
+.fly{position:absolute;left:0;top:0;width:90px;height:36px;opacity:0;pointer-events:none}
+.fly.go{opacity:1;animation:fly 2.8s cubic-bezier(.35,0,.55,1) var(--d) both}
+.fly svg{position:absolute;inset:0;width:100%;height:100%;fill:#e9eef4;filter:drop-shadow(0 0 8px rgba(200,255,0,.35))}
+.trail{position:absolute;right:82px;top:50%;height:5px;width:0;transform:translateY(-50%);border-radius:5px;background:linear-gradient(to left,var(--c),transparent);filter:blur(1.2px)}
+.fly.go .trail{animation:tr 1.4s ease-out var(--d) forwards}
+@keyframes fly{from{transform:translate(-30vw,var(--y0)) rotate(-9deg)}to{transform:translate(130vw,var(--y1)) rotate(-9deg)}}
+@keyframes tr{to{width:75vw}}
+.panel{position:relative;z-index:2;width:min(88vw,380px);padding:28px 0;text-align:center;text-shadow:0 2px 14px rgba(0,0,0,.6);transition:opacity .6s,transform .6s}
+.panel::before{content:"";position:absolute;left:50%;top:-6px;width:72px;height:3px;transform:translateX(-50%);border-radius:3px;background:linear-gradient(90deg,var(--saf) 33%,#fff 33% 66%,var(--grn) 66%)}
+.hide{opacity:0;transform:scale(.96);pointer-events:none;position:absolute}
+h1{font-weight:300;font-size:clamp(30px,8.5vw,38px);line-height:1.12;letter-spacing:-.01em;margin:6px 0 10px}
+p{color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.6}
+label{display:block;text-align:left;margin:22px 0 8px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--dim)}
+input{width:100%;padding:14px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.35);color:var(--ink);font:400 17px 'Outfit',sans-serif;outline:none}
+input:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+button{cursor:pointer;width:100%;margin-top:14px;padding:15px;border:0;border-radius:14px;background:var(--lime);color:#06090f;font:500 16px 'Outfit',sans-serif;transition:transform .15s}
+button:active{transform:scale(.97)}
+button.ghost{background:transparent;color:var(--ink);border:1px solid rgba(255,255,255,.22);margin-top:10px}
+.big{font-weight:200;font-size:96px;line-height:1;color:var(--lime);letter-spacing:-.03em}
+.big small{display:block;font-size:14px;font-weight:300;color:var(--dim);letter-spacing:0;margin-top:4px}
+#to{color:var(--lime)}
+.motto{margin:16px 0 4px;color:var(--ink)}
+.wm{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom,0px));left:0;right:0;text-align:center;font:400 11px 'JetBrains Mono',monospace;color:#5d6877;z-index:1}
+@media (prefers-reduced-motion:reduce){.fly.go,.fly.go .trail,#stars i{animation-duration:.01s}}
+</style>
+</head>
+<body>
+<div id="stars"></div>
+
+<div class="fly" style="--y0:52vh;--y1:20vh;--c:var(--saf);--d:0s"><div class="trail"></div><svg viewBox="0 0 100 40"><path d="M0 20 30 17 60 5h10L58 17l38 1 4 2-4 2-38 1 12 12H60L30 23Z"/></svg></div>
+<div class="fly" style="--y0:60vh;--y1:28vh;--c:#fff;--d:.1s"><div class="trail"></div><svg viewBox="0 0 100 40"><path d="M0 20 30 17 60 5h10L58 17l38 1 4 2-4 2-38 1 12 12H60L30 23Z"/></svg></div>
+<div class="fly" style="--y0:68vh;--y1:36vh;--c:var(--grn);--d:.2s"><div class="trail"></div><svg viewBox="0 0 100 40"><path d="M0 20 30 17 60 5h10L58 17l38 1 4 2-4 2-38 1 12 12H60L30 23Z"/></svg></div>
+
+<main class="panel hide" id="intro">
+  <p>8 October</p>
+  <h1>Send a flypast wish</h1>
+  <p>Type a name. Watch the tricolour cross the sky.</p>
+  <label for="name">Wish for</label>
+  <input id="name" maxlength="18" placeholder="Your friend's name" autocomplete="off">
+  <button id="go">Take off</button>
+</main>
+
+<main class="panel hide" id="card">
+  <div class="big"><span id="yrs">0</span><small>years of the Indian Air Force</small></div>
+  <h1>Happy Air Force Day, <span id="to"></span></h1>
+  <p>Touch the sky with glory.</p>
+  <button class="ghost" id="again">Replay flypast</button>
+</main>
+
+<div class="wm">@storymint.studio</div>
+
+<script>
+const $=s=>document.querySelector(s);
+for(let i=0;i<70;i++){const s=document.createElement('i'),z=1+Math.random()*2;s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${z}px;height:${z}px;animation-delay:${Math.random()*3}s`;$('#stars').appendChild(s)}
+let name='Friend',busy=false;
+function count(to){const t0=performance.now();(function f(t){const k=Math.min((t-t0)/1400,1);$('#yrs').textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f)})(t0)}
+function fly(done){
+  document.querySelectorAll('.fly').forEach(f=>{f.classList.remove('go');void f.offsetWidth;f.classList.add('go')});
+  setTimeout(done,3300);
+}
+function launch(){
+  if(busy)return;busy=true;
+  name=$('#name').value.trim()||'Friend';
+  $('#intro').classList.add('hide');$('#card').classList.add('hide');
+  fly(()=>{$('#to').textContent=name;$('#card').classList.remove('hide');$('#yrs').textContent='0';count(94);busy=false});
+}
+busy=true;
+setTimeout(()=>fly(()=>{$('#intro').classList.remove('hide');busy=false}),300);
+$('#go').onclick=launch;
+$('#name').addEventListener('keydown',e=>{if(e.key==='Enter')launch()});
+$('#again').onclick=launch;
+$('#share').onclick=async()=>{
+  const text=`Happy Air Force Day, ${name}! 🇮🇳✈️ Touch the sky with glory.`;
+  try{navigator.share?await navigator.share({title:'Air Force Day',text,url:location.href}):(await navigator.clipboard.writeText(text+' '+location.href),$('#share').textContent='Copied')}catch(e){}
+};
+</script>
+</body>
+</html>
